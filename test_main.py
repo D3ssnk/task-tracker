@@ -47,7 +47,7 @@ def test_delete(test_task_manager, test_json_file):
         json.dump(json_data, file)
     
     # test that when you delete a task, it gets deleted and also updates later tasks
-    test_task_manager.delete(2)
+    test_task_manager.delete(1)
     with open(test_json_file, "r") as file:
         json_data = json.load(file)
     assert json_data == [{'id': 1, 'description': 'Make Tea'}], "Ensure task was deleted and next task was updated"
@@ -62,7 +62,7 @@ def test_delete(test_task_manager, test_json_file):
         json_data = json.load(file)
     assert json_data == [], "Ensure task was deleted file is an empty list"
 
-    # test that when you try to delete a task with no tasks inside it throws an exception 
+    # test that when you try to delete a task with no tasks inside it throws an exception
     with pytest.raises(TaskNotFound, match = "This task does not exist" ):
         test_task_manager.delete(2)
 
