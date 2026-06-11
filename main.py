@@ -12,6 +12,10 @@ class TaskManager():
         with open(self.json_file, "r") as file:
             json_data = json.load(file)
         return json_data
+    
+    def check_task_exists(self, json_data, id):
+        if json_data == [] or id > len(json_data):
+            raise TaskNotFound()
 
     def add(self, description):
         with open(self.json_file, "r+") as file:
@@ -24,11 +28,9 @@ class TaskManager():
             json.dump(json_data,file) # writes the data back into the file 
     
     def delete(self, id):
-        with open(self.json_file, "r") as file:
-            json_data = json.load(file)
+        json_data = self.get_file()
         
-        if json_data == [] or id > len(json_data):
-            raise TaskNotFound()
+        self.check_task_exists(json_data, id)
             
         task_index = id - 1 
         del json_data[task_index]
@@ -39,11 +41,9 @@ class TaskManager():
             json.dump(json_data, file)
 
     def update(self, id, description):
-        with open(self.json_file, "r") as file:
-            json_data = json.load(file)
+        json_data = self.get_file()
         
-        if json_data == [] or id > len(json_data):
-            raise TaskNotFound()
+        self.check_task_exists(json_data, id)
         
         task_index = id - 1 
         json_data[task_index]["description"] = description
@@ -52,12 +52,10 @@ class TaskManager():
             json.dump(json_data, file)
     
     def mark(self, id, status):
-        with open(self.json_file, "r") as file:
-            json_data = json.load(file)
-        
-        if json_data == [] or id > len(json_data):
-            raise TaskNotFound()
-        
+        json_data = self.get_file()
+
+        self.check_task_exists(json_data, id)
+
         task_index = id - 1 
         json_data[task_index]["status"] = status
 

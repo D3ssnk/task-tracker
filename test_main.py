@@ -58,6 +58,13 @@ def test_get_file(test_task_manager, test_json_file):
     
     assert test_task_manager.get_file() == json_data
 
+def test_check_task_exists(test_task_manager, test_json_file):
+    with open(test_json_file,'r') as file:
+        json_data = json.load(file)
+    
+    with pytest.raises(TaskNotFound, match = "This task does not exist" ):
+        test_task_manager.check_task_exists(json_data, 6)
+
 def test_delete(test_task_manager, test_json_file):
     # test that when you delete a task, it gets deleted and also updates later tasks
     test_task_manager.delete(1)
