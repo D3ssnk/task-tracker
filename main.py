@@ -45,6 +45,9 @@ class TaskManager():
 
         with open(self.json_file, "w") as file:
             json.dump(json_data, file)
+    
+    def mark(self, id, status):
+        return 0
             
 
 def main():
