@@ -47,7 +47,17 @@ class TaskManager():
             json.dump(json_data, file)
     
     def mark(self, id, status):
-        return 0
+        with open(self.json_file, "r") as file:
+            json_data = json.load(file)
+        
+        if json_data == [] or id > len(json_data):
+            raise TaskNotFound()
+        
+        task_index = id - 1 
+        json_data[task_index]["status"] = status
+
+        with open(self.json_file, "w") as file:
+            json.dump(json_data, file)
             
 
 def main():
