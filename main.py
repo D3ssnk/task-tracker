@@ -63,7 +63,22 @@ class TaskManager():
             json.dump(json_data, file)
 
     def list_tasks(self, status = None):
-        return 0            
+        json_data = self.get_file()
+        if len(json_data) == 0:
+            return "There are no tasks!"
+
+        if status:
+            json_data = [n for n in json_data if n["status"] == status]
+            if len(json_data) == 0:
+                return "There are no tasks with status: " + status + "!"
+        
+        list_string = ""
+        for task in json_data:
+            task_string = f"id: {task['id']}\ndescription: {task['description']}\nstatus: {task['status']}\n\n"
+            list_string += task_string
+        
+        return list_string.strip()
+
 
 def main():
     return 0
