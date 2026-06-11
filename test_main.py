@@ -21,8 +21,6 @@ def test_empty_json_file():
         os.remove("test_json.json")
     
 
-
-
 def test_add(test_task_manager, test_empty_json_file):
     test_tasks = [{'id': 1, 'description': 'Make Coffee', "status": "todo"}]
     test_task_manager.add("Make Coffee")
@@ -52,6 +50,13 @@ def test_json_file():
     yield "test_json.json"
     if os.path.exists("test_json.json"):
         os.remove("test_json.json")
+
+
+def test_get_file(test_task_manager, test_json_file):
+    with open(test_json_file,'r') as file:
+        json_data = json.load(file)
+    
+    assert test_task_manager.get_file() == json_data
 
 def test_delete(test_task_manager, test_json_file):
     # test that when you delete a task, it gets deleted and also updates later tasks
