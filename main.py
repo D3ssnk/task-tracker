@@ -12,7 +12,7 @@ class TaskManager():
         with open(self.json_file, "r+") as file:
             json_data = json.load(file)
             task_id = len(json_data) + 1
-            task = {"id": task_id, "description": task_description}
+            task = {"id": task_id, "description": task_description, "status": "todo"}
             
             json_data.append(task) # appends the task to the json list
             file.seek(0) # sets the cursor to the start so you can rewrite the entire file 

@@ -24,7 +24,7 @@ def test_json_file():
 
 
 def test_add(test_task_manager, test_json_file):
-    test_tasks = [{'id': 1, 'description': 'Make Coffee'}]
+    test_tasks = [{'id': 1, 'description': 'Make Coffee', "status": "todo"}]
     test_task_manager.add("Make Coffee")
 
     with open(test_json_file, "r") as file:
@@ -34,7 +34,7 @@ def test_add(test_task_manager, test_json_file):
 
         
     test_task_manager.add("Make Tea")
-    test_tasks.append({'id': 2, 'description': 'Make Tea'})
+    test_tasks.append({'id': 2, 'description': 'Make Tea', "status": "todo"})
 
     with open(test_json_file, "r") as file:
         json_data = json.load(file)
@@ -43,7 +43,7 @@ def test_add(test_task_manager, test_json_file):
 
 
 def test_delete(test_task_manager, test_json_file):
-    test_tasks = [{'id': 1, 'description': 'Make Coffee'}, {'id': 2, 'description': 'Make Tea'}]
+    test_tasks = [{'id': 1, 'description': 'Make Coffee', "status": "todo"}, {'id': 2, 'description': 'Make Tea', "status": "todo"}]
     with open(test_json_file, "r+") as file:
         json_data = json.load(file)
         json_data += test_tasks
@@ -54,7 +54,7 @@ def test_delete(test_task_manager, test_json_file):
     test_task_manager.delete(1)
     with open(test_json_file, "r") as file:
         json_data = json.load(file)
-    assert json_data == [{'id': 1, 'description': 'Make Tea'}], "Ensure task was deleted and next task was updated"
+    assert json_data == [{'id': 1, 'description': 'Make Tea', "status": "todo"}], "Ensure task was deleted and next task was updated"
 
     # test that when you try to delete a task with the wrong id, it throws an exception
     with pytest.raises(TaskNotFound, match = "This task does not exist" ):
